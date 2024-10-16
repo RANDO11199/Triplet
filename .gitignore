@@ -1,0 +1,16 @@
+nerf_synthetic
+data
+tests
+colmap
+assets
+output
+*.png
+*.ply
+*.obj
+*.zip
+*.bz2
+*.gz2
+*.ipynb
+*.log
+*.pyc
+.vscode
