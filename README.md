@@ -1,4 +1,4 @@
-# Triplet: Triangle Patchlet for Physics-Based Inverse Rendering and Scene Parameter Approximation
+# Triplet: Triangle Patchlet for Mesh-Based Inverse Rendering and Scene Parameter Approximation
 
 At present, this repository contains the code to evaluate the results of:
 - [x] Rasterization - BlinnPhong
