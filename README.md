@@ -230,7 +230,7 @@ git clone git@github.com:RANDO11199/ParticleFieldDuality.git --recursive
 ```
 ### Install Pytorch3d in the submodules
 ```shell
-cd submodules
+git clone git@github.com:RANDO11199/Pytorch3d4triplet.git
 cd pytorch3d4triplet
 pip install -e .
 ```
