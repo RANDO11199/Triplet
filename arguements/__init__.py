@@ -93,11 +93,11 @@ class OptimizationParams(ParamGroup):
         self.lr_delay_steps = 0.
         self.deform_lr_delay_mult = 1.
         self.deform_lr_max_steps = 30_000
-        self.SH_lr = 0.001
-        self.ambient_materials_lr = 0.001
-        self.diffuse_materials_lr = 0.001
-        self.specular_materials_lr = 0.001
-        self.shininess_lr = 0.001 # 0.001 for blinnphong 0.01 for cooktorrance
+        self.SH_lr = 0.01
+        self.ambient_materials_lr = 0.01
+        self.diffuse_materials_lr = 0.01
+        self.specular_materials_lr = 0.01
+        self.shininess_lr = 0.01 # 0.001 for blinnphong 0.01 for cooktorrance
         self.texts_lr = 0.001
         self.alpha_lr = 0.05
         self.deform_lr = 0.00016 
