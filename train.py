@@ -31,7 +31,7 @@ from tqdm import tqdm
 from torch.nn.functional import interpolate
 from utils.loss_utils import psnr
 from argparse import ArgumentParser, Namespace
-from arguements import ModelParams, PipelineParams, OptimizationParams, LightParams
+from arguements import ModelParams, PipelineParams, OptimizationParams, LightParams, align_paramater_relfectionmodel, align_paramater_scene_type
 from functools import partial
 torch.backends.cudnn.enabled = True 
 torch.backends.cudnn.benchmark = True
@@ -255,9 +255,16 @@ if __name__ == "__main__":
     parser.add_argument("--quiet", action="store_true")
     parser.add_argument("--checkpoint_iterations", nargs="+", type=int, default=[30_000])
     parser.add_argument("--start_checkpoint", type=str, default = None)
+    parser.add_argument('--align_param', action='store_true', default=True)
     args = parser.parse_args(sys.argv[1:])
     args.save_iterations.append(args.iterations)
-    
+    print(lp.compensate_random_Point)
+    lp = lp.extract(args)
+    mp = mp.extract(args)
+    op = op.extract(args)
+    if args.align_param:
+        lp,op = align_paramater_relfectionmodel(lp,op,mp)
+        lp,op = align_paramater_scene_type(lp,op,mp)
     print("Optimizing " + args.model_path)
 
     # Initialize system state (RNG)
@@ -266,7 +273,7 @@ if __name__ == "__main__":
     # Start GUI server, configure and run training
     network_gui.init(args.ip, args.port) 
     torch.autograd.set_detect_anomaly(args.detect_anomaly)
-    training(mp.extract(args),lp.extract(args), op.extract(args), pp.extract(args), args.test_iterations, args.save_iterations, args.checkpoint_iterations, args.start_checkpoint, args.debug_from)
+    training(mp,lp, op, pp.extract(args), args.test_iterations, args.save_iterations, args.checkpoint_iterations, args.start_checkpoint, args.debug_from)
 
     # All done
     print("\nTraining complete.")

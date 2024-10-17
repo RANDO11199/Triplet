@@ -30,7 +30,7 @@ def Rasterize(shader ,target_camera, light, triplet:TripletModel,pipe, bg_color:
 
     raster_settings = RasterizationSettings(
         image_size=(int(target_camera.image_height*scaling), int(target_camera.image_width*scaling)), 
-        faces_per_pixel=triplet.pixel_per_faces)
+        faces_per_pixel=triplet.faces_per_pixel)
     rasterizer = MeshRasterizer(raster_settings=raster_settings
                                 )
     # rasterizer = MeshRasterizerOpenGL(raster_settings=raster_settings)

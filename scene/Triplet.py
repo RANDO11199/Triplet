@@ -200,7 +200,7 @@ class TripletModel:
                 self.materials_type = 'BP'
                 del SphereHarmonics_Coeffs
             if opt.materials_type=="CT":                                    
-                ambient_materials = self.deact(torch.clamp(torch.tensor([[[0.1],],]).cuda()*torch.ones(1,fused_point_cloud.shape[1],1,device='cuda') + 0.05 * (torch.randn(1,fused_point_cloud.shape[1],1,device='cuda')),0.,1.))# AO
+                ambient_materials = self.deact(torch.clamp(torch.tensor([[[1.0],],]).cuda()*torch.ones(1,fused_point_cloud.shape[1],1,device='cuda') + 0.05 * (torch.randn(1,fused_point_cloud.shape[1],1,device='cuda')),0.,1.))# AO
                 diffuse_materials = self.deact(fused_color) #albedo
                 # Q: Why 0.1 0.9?
                 # A: decrease the sensitivity to lights at the very beginning of train. Specular light is more sensitive
@@ -246,7 +246,7 @@ class TripletModel:
             {'params':self._shininess,"name":'shininess','lr':training_args.shininess_lr},
             {'params':self._feature_dc_s,"name":'feature_dc_s','lr':training_args.SH_lr},
             {'params':self._feature_rest_s,"name":'feature_rest_s','lr':training_args.SH_lr/10},
-        ], lr=0.0,eps=1e-15,betas=(0.65,0.999))
+        ], lr=0.0,eps=1e-15,betas=(0.5,0.999))
         self.deform_verts_scheduler_args = get_expon_lr_func(lr_init=training_args.deform_lr_init*self.spatial_lr_scale,
                                                     lr_final=training_args.deform_lr_final*self.spatial_lr_scale,
                                                     lr_delay_mult=training_args.deform_lr_delay_mult,
@@ -813,37 +813,35 @@ class TripletModel:
         # Faster, 
         if iteration < 200:
             self.resolution_scale = 1/4
-            self.pixel_per_faces = 150 #40
+            self.faces_per_pixel = 150 #40
             # self.percent_dense = 1e-2
             # self.max_grad = 1e-4
             # self.min_alpha = 0.01
         elif 600>iteration >=200:
             self.resolution_scale = 1/2
-            self.pixel_per_faces = 20 # 30
+            self.faces_per_pixel = opt.faces_per_pixel # 30
             # self.percent_dense = 1e-2
             # self.min_alpha = 0.05 # Make the surface slim  / 25
             # self.alpha_reset_val = 0.01
             # self.max_grad = 1e-4
         elif 10000>iteration >=600:
             self.resolution_scale = 1.
-            self.pixel_per_faces = 20 # 30
+            self.faces_per_pixel = opt.faces_per_pixel # 30
             # self.percent_dense = 1e-2
             # self.min_alpha = 0.05 # Make the surface slim  / 25
             # self.alpha_reset_val = 0.01
             # self.max_grad = 1e-4
         elif 20000>iteration >=10000:
             self.resolution_scale = 1    
-            self.pixel_per_faces = 20
+            self.faces_per_pixel = opt.faces_per_pixel
             # self.percent_dense = 1e-2
             # self.min_alpha = 0.05 # Make the surface slim
             # self.alpha_reset_val = 0.01
             # self.max_grad = 1e-4
         else:
             self.resolution_scale = 1    
-            self.pixel_per_faces = 20
+            self.faces_per_pixel = opt.faces_per_pixel
             # self.percent_dense = 1e-2
             self.min_alpha = 0.05 # Make the surface slim
             # self.alpha_reset_val = 0.01
             # self.max_grad = 1e-4
-
-    # self.pixel_per_faces = 10

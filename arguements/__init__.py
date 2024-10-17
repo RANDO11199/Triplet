@@ -1,7 +1,7 @@
 from argparse import ArgumentParser, Namespace
 import sys
 import os
-
+from .align_config import align_paramater_relfectionmodel,align_paramater_scene_type
 class GroupParams:
     pass
 
@@ -39,14 +39,12 @@ class ModelParams(ParamGroup):
         self._source_path = ""
         self._model_path = ""
         self._images = "images"
-        self.resolution = -1
+        self.resolution = 4
         self._white_background = True
         self.data_device = "cuda"
         self.eval = True
         self.materials_type = "BP" # BP SH RT
         self.renderer = 'Rasterization'
-        # self.faces_per_pixel = 20 # 15 for object 10 for scene
-                                    # For semi-transparent and transparent object, set higher faces_per_pixel and less alpha; You could also set high faces_per_pixel and low alpha directly, but it would increase the cost (i.e. H*W*FacesPerPixel, double FPP, double cost)
         super().__init__(parser, "Loading Parameters", sentinel)
 
     def extract(self, args):
@@ -68,7 +66,7 @@ class LightParams(ParamGroup):
         self.ambient_intensity = (40.,40.,40.)
         self.light_specular_color =  (1.,1.,1.)
         self.light_diffuse_color =   (1.,1.,1.)
-        self.light_ambient_color = (1.,1.,1.) # (1.,1.,1.) # for BlinnPhong (0.003,0.003,0.003)  for CookTorrance
+        self.light_ambient_color = (1.,1.,1.) # (1.,1.,1.) for BlinnPhong (0.003,0.003,0.003)  for CookTorrance
         self.light_position_lr = 0.005
         self.light_direction_lr = 0.05
         self.light_ambient_lr = 0.005 # 0.0001 fir CT 0.005 for BP
@@ -80,14 +78,15 @@ class LightParams(ParamGroup):
         self.diffuse_band = 121
         self.specular_band = 9
         self.envmap_resolution = (800,800) # W/phi yawing 2pi H/theta pitch pi
-        self.diffuse_sh_coefs_lr = 0.02
-        self.specular_sh_coefs_lr = 0.02
+        self.diffuse_sh_coefs_lr = 0.02 # EnvMap
+        self.specular_sh_coefs_lr = 0.02 # EnvMap
         self.max_sh_degree = 5 # scene 2 object 5
         self.compensate_random_Point = True # True for scene
         super().__init__(parser, "Optimization Parameters")
 
 class OptimizationParams(ParamGroup):
     def __init__(self, parser):
+        self.scene_type = 'Object' # Scene, Object
         self.iterations = 18000 # 18000 for object 30000 for scene
         self.deform_lr_init = 0.00011 # 0.00016 for  scene 0.00011 for object
         self.deform_lr_final = 0.0000011 # 0.0000016 for  scene  0000011 for object
@@ -113,8 +112,10 @@ class OptimizationParams(ParamGroup):
         self.complex_materials_start_from = 0
         self.random_background = False
         self.use_gt_alpha = False
-        self.view_compensation_from_iter = 30000
-        self.improve_density_from_iter = [1000,3000,5000]
+        self.faces_per_pixel = 20 # 15 for object 10 for scene
+                                    # For semi-transparent and transparent object, set higher faces_per_pixel and less alpha; You could also set high faces_per_pixel and low alpha directly, but it would increase the cost (i.e. H*W*FacesPerPixel, double FPP, double cost)
+        # self.view_compensation_from_iter = 30000
+        # self.improve_density_from_iter = [1000,3000,5000]
         super().__init__(parser, "Optimization Parameters")
 
 def get_combined_args(parser : ArgumentParser):
