@@ -226,7 +226,7 @@ Faces_Per_Pixels: 40
 ## Installation:
 ### Clone the project
 ```shell
-git clone git@github.com:RANDO11199/ParticleFieldDuality.git --recursive
+git clone git@github.com:RANDO11199/ParticleFieldDuality.git
 ```
 ### Install Pytorch3d in the submodules
 ```shell
