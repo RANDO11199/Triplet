@@ -1,5 +1,7 @@
 # Triplet: Triangle Patchlet for Mesh-Based Inverse Rendering and Scene Parameter Approximation
 
+Paper: https://arxiv.org/abs/2410.12414
+
 At present, this repository contains the code to evaluate the results of:
 - [x] Rasterization - BlinnPhong
 - [x] Rastierzation - Cook-Torrance
