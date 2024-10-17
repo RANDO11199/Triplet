@@ -17,7 +17,7 @@ def align_paramater_scene_type(LightArgs,optArgs,modelArgs):
         optArgs.deform_lr_init = 0.00016
         optArgs.deform_lr_final = 0.0000016
         optArgs.iterations = 30000
-        optArgs.densify_grad_threshold = 7.5e-5
+        optArgs.densify_grad_threshold = 2e-4
         modelArgs._white_background = False
     elif optArgs.scene_type=='Object':
         LightArgs.max_sh_degree = 5
@@ -26,7 +26,7 @@ def align_paramater_scene_type(LightArgs,optArgs,modelArgs):
         optArgs.deform_lr_init = 0.00011
         optArgs.deform_lr_final = 0.0000011
         optArgs.iterations = 18000
-        optArgs.densify_grad_threshold = 2e-4
+        optArgs.densify_grad_threshold = 7.5e-5
     else:
         raise NotImplementedError(f'Scene type : {optArgs.scene_type} not implemented yet')
     return LightArgs,optArgs
