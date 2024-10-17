@@ -224,21 +224,22 @@ Faces_Per_Pixels: 40
 <br>
 
 ## Installation:
-### Clone the project
 ```shell
-git clone git@github.com:RANDO11199/ParticleFieldDuality.git
-```
-### Install Pytorch3d in the submodules
-```shell
-git clone git@github.com:RANDO11199/Pytorch3d4triplet.git
+conda create -n triplet python==3.8
+conda activate triplet
+pip3 install torch==2.0.0 torchvision==0.15.1 --index-url https://download.pytorch.org/whl/cu118
+git clone https://github.com/RANDO11199/Pytorch3d4triplet.git
 cd Pytorch3d4triplet
 pip install -e .
+pip install torch_harmonics
+pip install numba
+pip install einops
+pip install plyfile
+pip install open3d
+pip install opencv-python
+git clone git@github.com:RANDO11199/ParticleFieldDuality.git
 ```
 For more details on installing PyTorch3D, see the official [INSTALL.md](https://github.com/facebookresearch/pytorch3d/blob/main/INSTALL.md#building--installing-from-source)
-### Install other dependencies:
-```shell
-pip install -r requirements.txt
-```
 
 ## Usage
 ### Training
