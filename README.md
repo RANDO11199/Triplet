@@ -1,4 +1,7 @@
-# Triplet: Triangle Patchlet for Mesh-Based Inverse Rendering and Scene Parameter Approximation
+2025/03/05 This project will not be updated in short time due to the termination of my RA. Raytracing give a very good result but it is not fully tested. If you are interested in raytracing, please refer to [NVDiffrast](url).
+
+
+## Triplet: Triangle Patchlet for Mesh-Based Inverse Rendering and Scene Parameter Approximation
 
 Paper: https://arxiv.org/abs/2410.12414
 
@@ -249,7 +252,7 @@ For more details on installing PyTorch3D, see the official [INSTALL.md](https://
 python train.py -s <path to your colmap or Synthetic NeRF dataset > 
 ```
 ## Extra
-Currently, I am looking for research opportunities (Job/PhD). It would be a great help if you could ⭐ Star my project. For any questions, opportunities, or cooperation, please contact me at jiajie.y@wustl.edu.
+~~Currently, I am looking for research opportunities (Job/PhD). It would be a great help if you could ⭐ Star my project. For any questions, opportunities, or cooperation, please contact me at jiajie.y@wustl.edu.~~  I didnt get a Phd but i got a job focusing on HPC and LLM.
 
 If you find the code or paper helpful, please consider citing me!:D
 
